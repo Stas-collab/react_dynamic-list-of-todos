@@ -1,5 +1,6 @@
 import React from 'react';
 import { Todo } from '../../types/Todo';
+import classNames from 'classnames';
 
 type Props = {
   todo: Todo[];
@@ -25,7 +26,13 @@ export const TodoList: React.FC<Props> = ({ todo, onShow, selectedTodoId }) => {
 
       <tbody>
         {todo.map(el => (
-          <tr data-cy="todo" key={el.id} className="">
+          <tr
+            data-cy="todo"
+            key={el.id}
+            className={classNames({
+              'has-background-info-light': el.id === selectedTodoId,
+            })}
+          >
             <td className="is-vcentered">{el.id}</td>
             <td className="is-vcentered">
               {el.completed && (
@@ -36,16 +43,22 @@ export const TodoList: React.FC<Props> = ({ todo, onShow, selectedTodoId }) => {
             </td>
             <td className="is-vcentered is-expanded">
               <p
-                className={
-                  el.completed ? 'has-text-success' : 'has-text-danger'
-                }
+                className={classNames({
+                  'has-text-success': el.completed,
+                  'has-text-danger': !el.completed,
+                })}
               >
                 {el.title}
               </p>
             </td>
             <td className="has-text-right is-vcentered">
-              <button data-cy="selectButton" className="button" type="button">
-                <span className="icon" onClick={() => onShow(el)}>
+              <button
+                data-cy="selectButton"
+                className="button"
+                type="button"
+                onClick={() => onShow(el)}
+              >
+                <span className="icon">
                   <i
                     className={
                       el.id === selectedTodoId

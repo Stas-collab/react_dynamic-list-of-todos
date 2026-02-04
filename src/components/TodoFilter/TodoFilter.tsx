@@ -13,14 +13,18 @@ export const TodoFilter: React.FC<Props> = ({
   onQueryChange,
   status,
 }) => {
-  const handle = (e: React.ChangeEvent<HTMLSelectElement>) =>
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
     onStatusChange(e.target.value as 'all' | 'active' | 'completed');
 
   return (
     <form className="field has-addons">
       <p className="control">
         <span className="select">
-          <select data-cy="statusSelect" value={status} onChange={handle}>
+          <select
+            data-cy="statusSelect"
+            value={status}
+            onChange={handleStatusChange}
+          >
             <option value="all">All</option>
             <option value="active">Active</option>
             <option value="completed">Completed</option>
@@ -49,7 +53,6 @@ export const TodoFilter: React.FC<Props> = ({
               type="button"
               className="delete"
               onClick={() => {
-                onStatusChange('all');
                 onQueryChange('');
               }}
             />
